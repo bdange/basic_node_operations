@@ -25,46 +25,52 @@ function evaluateCmd(userInput) {
       break;
     case "tail":
       commandLibrary.tail(userInputArray.slice(1));
-    default: process.stdout.write('Typed command is not accurate');
-  }
+    default:
+      process.stdout.write("Typed command is not accurate");
   }
 }
 
 //where we will store the logic of our commands
 const commandLibrary = {
   //the echo command
-  
-  "echo": function(userInput) {
+
+  echo: function(userInput) {
     done(userInput);
-  }
+  },
   //the cat command
-  "cat": function(fullPath) {
+  cat: function(fullPath) {
     const fileName = fullPath[0];
     fs.readFile(fileName, (err, data) => {
-        if (err) throw err;
-        done(data);
+      if (err) throw err;
+      done(data);
     });
-  }  
-  "head": function (fullPath){
+  },
+  head: function(fullPath) {
     const fileName = fullPath[0];
     fs.readFile(fileName, (err, data) => {
-       if (err) throw err;
-       var text = data.toString('utf8');
-       var slicedText = text.split('\n').slice(0,10).join('\n');
-       var bufferText = Buffer.from(slicedText, 'utf8');
-       done(bufferText);
-    })
- }
- "tail": function (fullPath){
-  const fileName = fullPath[0];
-  fs.readFile(fileName, (err, data) => {
-     if (err) throw err;
-     var text = data.toString('utf8');
-     var slicedText = text.split('\n').slice(-10).join('\n');
-     var bufferText = Buffer.from(slicedText, 'utf8');
-     done(bufferText);
-    })
- }
+      if (err) throw err;
+      var text = data.toString("utf8");
+      var slicedText = text
+        .split("\n")
+        .slice(0, 10)
+        .join("\n");
+      var bufferText = Buffer.from(slicedText, "utf8");
+      done(bufferText);
+    });
+  },
+  tail: function(fullPath) {
+    const fileName = fullPath[0];
+    fs.readFile(fileName, (err, data) => {
+      if (err) throw err;
+      var text = data.toString("utf8");
+      var slicedText = text
+        .split("\n")
+        .slice(-10)
+        .join("\n");
+      var bufferText = Buffer.from(slicedText, "utf8");
+      done(bufferText);
+    });
+  }
 };
 
 module.exports.commandLibrary = commandLibrary;
